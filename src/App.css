@@ -1,0 +1,54 @@
+.App {
+  /* display: flex; */
+  background-color: #F2F2F2;
+  position: relative;
+  min-width: 100%;
+    min-height: 100%;
+}
+
+
+.Moose {
+  position: absolute;
+  top: 42%;
+  left: 44%;
+}
+
+.Moose img {
+  
+    width: 200px;
+
+}
+  
+.App .Scoreboard {
+  position: absolute;
+  right: 200px;
+  top: 50px;
+  font-size: 40pt;
+  font-family: Monotype Corsiva;
+  
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.upgrade {
+  
+  width: 300px;
+  height: 150px;
+  text-align: center;
+  border: 2px double #E2E5E5;  
+}
+
+progress {
+  -webkit-appearance: none;
+  width: 250px;
+  height: 20px;
+}
+
+::-webkit-progress-bar {
+  background-color: rgb(236, 233, 227);
+}
+
