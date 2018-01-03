@@ -48,6 +48,7 @@ export default class Upgrades extends Component {
     mooseClickHandler() {
 
         this.setState({ clicked: this.state.clicked + this.state.clickCounter });
+        
     }
 
 
@@ -62,7 +63,10 @@ export default class Upgrades extends Component {
                     <div className="menu">
                         {upgrades.map((num, index) => {
                             return (
-                                <div className="upgrade" key={index + 1} onClick={this.upgradeClickHandler.bind(this, num.mooseMin, index + 1)}>{num.name}({num.mooseMin})</div>
+                                <div className="upgrade" id={index + 1} onClick={this.upgradeClickHandler.bind(this, num.mooseMin, index + 1)}>
+                                <progress value={(this.state.clicked / num.mooseMin) * 100} max="100" id={index + 1 + 'p'}>123</progress>
+                                {num.name}({num.mooseMin})
+                                </div>
                             )
                         })
                         }
