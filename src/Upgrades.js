@@ -25,13 +25,16 @@ export default class Upgrades extends Component {
     }
 
     componentWillMount() {
-        if (localStorage.getItem("clicked") !== '') {
+        console.log(localStorage.getItem("clickCounter"));
+        if (localStorage.getItem("clicked") !== null) {
             this.setState({ clicked: +localStorage.getItem("clicked"), clickCounter: +localStorage.getItem("clickCounter") });
+        } else {
+            this.setState({ clicked: +0, clickCounter: +1 });    
         }
 
         window.addEventListener("beforeunload", (ev) => {
             localStorage.setItem("clicked", this.state.clicked);
-            localStorage.setItem("clickCounter", this.state.clickCounter);
+            localStorage.setItem("clickCounter", 1);
         });
     }
 
@@ -63,7 +66,7 @@ export default class Upgrades extends Component {
                     <div className="menu">
                         {upgrades.map((num, index) => {
                             return (
-                                <div className="upgrade" id={index + 1} onClick={this.upgradeClickHandler.bind(this, num.mooseMin, index + 1)}>
+                                <div className="upgrade" key={index + 1} id={index + 1} onClick={this.upgradeClickHandler.bind(this, num.mooseMin, index + 1)}>
                                 <progress value={(this.state.clicked / num.mooseMin) * 100} max="100" id={index + 1 + 'p'}>123</progress>
                                 {num.name}({num.mooseMin})
                                 </div>
