@@ -22,7 +22,7 @@ class App extends Component {
   }
   componentWillMount() {
     if (localStorage.getItem("clicked") !== '') {
-      this.setState({ clicked: localStorage.getItem("clicked") * 1, clickCounter:  localStorage.getItem("clickCounter") * 1});
+      this.setState({ clicked: localStorage.getItem("clicked") * 1, clickCounter: localStorage.getItem("clickCounter") * 1 });
     }
 
     window.addEventListener("beforeunload", (ev) => {
@@ -33,97 +33,62 @@ class App extends Component {
     });
   }
 
- 
-  
-
 
   MooseClickHandler() {
-    
+
     this.setState({ clicked: this.state.clicked + this.state.clickCounter });
 
-    // localStorage.setItem('clicked', this.state.clicked + 1);
-
   }
 
-  UpgradeClickHandler(incrCounterClick) {
-    if (incrCounterClick === 1) {
-      if (this.state.clicked >= this.state.hornsMin) {
-        this.setState({
-          clicked: this.state.clicked - this.state.hornsMin,
-          clickCounter: this.state.clickCounter + 1
-        });
-        // localStorage.setItem('clickCounter', this.state.clickCounter, 'clicked', this.state.clicked - this.state.hornsMin);
-      }
-    }
+  UpgradeClickHandler(hornsMin, incrClick) {
+    console.log(hornsMin, incrClick);
 
-    if (incrCounterClick === 2) {
-      if (this.state.clicked >= this.state.bloomMin) {
-        this.setState({
-          clicked: this.state.clicked - this.state.bloomMin,
-          clickCounter: this.state.clickCounter + 2
-        });
-        // localStorage.setItem('clickCounter', this.state.clickCounter, 'clicked', this.state.clicked);
-      }
-    }
-
-    if (incrCounterClick === 3) {
-      if (this.state.clicked >= this.state.sleighMin) {
-        this.setState({
-          clicked: this.state.clicked - this.state.sleighMin,
-          clickCounter: this.state.clickCounter + 3
-        });
-        // localStorage.setItem('clickCounter', this.state.clickCounter, 'clicked', this.state.clicked);
-      }
-    }
-
-    if (incrCounterClick === 4) {
-      if (this.state.clicked >= this.state.scooterMin) {
-        this.setState({
-          clicked: this.state.clicked - this.state.scooterMin,
-          clickCounter: this.state.clickCounter + 4
-        });
-        // localStorage.setItem('clickCounter', this.state.clickCounter, 'clicked', this.state.clicked);
-        alert('grats!')
-      }
+    if (this.state.clicked >= hornsMin) {
+      this.setState({
+        clicked: this.state.clicked - hornsMin,
+        clickCounter: this.state.clickCounter + incrClick
+      });
+      // localStorage.setItem('clickCounter', this.state.clickCounter, 'clicked', this.state.clicked - this.state.hornsMin);
     }
   }
+  
 
-  render() {
-    return (
-      <div className="App">
+render() {
+  return (
+    <div className="App">
 
-        <div className="Moose">
-          <img src={moose} onClick={this.MooseClickHandler} alt="moose" />
-        </div>
-        <div className="menu">
-          <div className="upgrade" onClick={this.UpgradeClickHandler.bind(this, 1)}>
+      <div className="Moose">
+        <img src={moose} onClick={this.MooseClickHandler} alt="moose" />
+      </div>
+      <div className="menu">
+        <div className="upgrade" onClick={this.UpgradeClickHandler.bind(this, this.state.hornsMin, 1)}>
           <progress value={(this.state.clicked / this.state.hornsMin) * 100} max="100" />
-            Рога({this.state.hornsMin})
+          Рога({this.state.hornsMin})
           </div>
-          <div className="upgrade" onClick={this.UpgradeClickHandler.bind(this, 2)}>
+        <div className="upgrade" onClick={this.UpgradeClickHandler.bind(this, this.state.bloomMin, 2)}>
           <progress value={(this.state.clicked / this.state.bloomMin) * 100} max="100" />
-            Шерсть({this.state.bloomMin})
+          Шерсть({this.state.bloomMin})
           </div>
-          <div className="upgrade" onClick={this.UpgradeClickHandler.bind(this, 3)}>
+        <div className="upgrade" onClick={this.UpgradeClickHandler.bind(this, this.state.sleighMin, 3)}>
           <progress value={(this.state.clicked / this.state.sleighMin) * 100} max="100" />
-            Санки({this.state.sleighMin})
+          Санки({this.state.sleighMin})
           </div>
-          <div className="upgrade" onClick={this.UpgradeClickHandler.bind(this, 4)}>
+        <div className="upgrade" onClick={this.UpgradeClickHandler.bind(this, this.state.scooterMin, 4)}>
           <progress value={(this.state.clicked / this.state.scooterMin) * 100} max="100" />
-            Скутер({this.state.scooterMin})
+          Скутер({this.state.scooterMin})
           </div>
-          <div>
-        
-      </div>
-          
-        </div>
-        <div className="Scoreboard">
-          Лосиков: {this.state.clicked}
+        <div>
+
         </div>
 
       </div>
-    );
-  }
+      <div className="Scoreboard">
+        Лосиков: {this.state.clicked}
+      </div>
+
+    </div>
+  );
+}
 }
 
 export default App;
