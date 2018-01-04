@@ -25,17 +25,18 @@
   font-size: 40pt;
   font-family: Monotype Corsiva;
   
+  
 }
 
 .menu {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  
   
   
 }
 
-.upgrade {
+.upgradeDark {
   
   width: 350px;
   height: 100vh;
@@ -43,8 +44,33 @@
   border: 2px double #E2E5E5;  
   /* font-family: Impact; */
   /* font-size: 20pt; */
-  background-color: #F6F9FA;
+  background-color: #959090;
+  display: flex;
+  flex-direction: column;
+  
 }
+
+.upgradeLight {
+  
+  width: 350px;
+  height: 100vh;
+  text-align: center;
+  border: 2px double #E2E5E5;  
+  /* font-family: Impact; */
+  /* font-size: 20pt; */
+  background-color: #E3ECEC;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.upgrade-text {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+}
+
 
 progress {
   -webkit-appearance: none;
@@ -52,6 +78,8 @@ progress {
   height: 20px;
   margin-left: 0px;
 }
+
+
 
 ::-webkit-progress-bar {
   background-color: #F6F9FA;

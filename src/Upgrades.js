@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import Progress from 'react-progressbar';
 import moose from './moose.png';
 var upgrades = require('./upgradesConfig.json');
 var config = require('./config.json');
@@ -17,7 +16,8 @@ export default class Upgrades extends Component {
             hornsMin: config.hornsMin,
             bloomMin: config.bloomMin,
             sleighMin: config.sleighMin,
-            scooterMin: config.scooterMin
+            scooterMin: config.scooterMin,
+            availableUpgrade: true
         }
         this.mooseClickHandler = this.mooseClickHandler.bind(this);
         this.upgradeClickHandler = this.upgradeClickHandler.bind(this);
@@ -25,16 +25,17 @@ export default class Upgrades extends Component {
     }
 
     componentWillMount() {
-        console.log(localStorage.getItem("clickCounter"));
         if (localStorage.getItem("clicked") !== null) {
             this.setState({ clicked: +localStorage.getItem("clicked"), clickCounter: +localStorage.getItem("clickCounter") });
         } else {
-            this.setState({ clicked: +0, clickCounter: +1 });    
+            this.setState({ clicked: +0, clickCounter: +1 });
         }
+
+
 
         window.addEventListener("beforeunload", (ev) => {
             localStorage.setItem("clicked", this.state.clicked);
-            localStorage.setItem("clickCounter", 1);
+            localStorage.setItem("clickCounter", this.state.clickCounter);
         });
     }
 
@@ -51,33 +52,41 @@ export default class Upgrades extends Component {
     mooseClickHandler() {
 
         this.setState({ clicked: this.state.clicked + this.state.clickCounter });
-        
+
     }
 
 
     render() {
         {
-
             return (
-                <div>
+                <div className="menu">
                     <div className="Moose">
                         <img src={moose} onClick={this.mooseClickHandler} alt="moose" />
                     </div>
-                    <div className="menu">
-                        {upgrades.map((num, index) => {
-                            return (
-                                <div className="upgrade" key={index + 1} id={index + 1} onClick={this.upgradeClickHandler.bind(this, num.mooseMin, index + 1)}>
-                                <progress value={(this.state.clicked / num.mooseMin) * 100} max="100" id={index + 1 + 'p'}>123</progress>
-                                {num.name}({num.mooseMin})
-                                </div>
-                            )
-                        })
+                    {upgrades.map((num, index) => {
+                        
+                        if ((this.state.clicked / num.mooseMin) >= 1) {
+                            this.state.availableUpgrade = true;
+                        } else {
+                            this.state.availableUpgrade = false;
                         }
-                    </div>
+                        
+                        return (
+                            <div className={this.state.availableUpgrade ? "upgradeLight" : "upgradeDark"} key={index + 1} id={index + 1} onClick={this.upgradeClickHandler.bind(this, num.mooseMin, index + 1)}>
+                                <progress value={(this.state.clicked / num.mooseMin) * 100} max="100" id={index + 1 + 'p'}>123</progress>
+                                <div className="upgrade-text">
+                                    {num.name}({num.mooseMin})
+                                </div>
+                            </div>
+                        )
+                    })
+                    }
                     <div className="scoreboard">
                         Лосиков: {this.state.clicked}
                     </div>
                 </div>
+
+
 
             );
         }
