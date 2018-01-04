@@ -30,7 +30,7 @@ export default class Upgrades extends Component {
             let newUpgrades = [storageJSON["hornsMin"], storageJSON["bloomMin"], storageJSON["sleighMin"], storageJSON["scooterMin"], storageJSON["rocketMin"]];
             this.setState({ clicked: +storageJSON["clicked"], clickCounter: +storageJSON["clickCounter"], dps: +storageJSON["dps"], upgrades: newUpgrades });
         } else {
-            this.setState({ clicked: +0, clickCounter: +1, dps: +0 });
+            this.setState({ clicked: 0, clickCounter: 1, dps: 0 });
         }
 
         setInterval(() => {
@@ -71,6 +71,18 @@ export default class Upgrades extends Component {
 
     }
 
+    returnMoose(mooseConv) {
+        
+        if (mooseConv < Math.pow(10, 3)) {
+            return(mooseConv);
+         } else if ((mooseConv >= Math.pow(10, 3)) && (mooseConv < Math.pow(10, 6))) {
+            return((mooseConv / Math.pow(10, 3)).toFixed(2) + 'K'); 
+         } else {
+            return((mooseConv / Math.pow(10, 6)).toFixed(2) + 'М'); 
+         }
+        
+    }
+
 
     render() {
         {
@@ -82,22 +94,14 @@ export default class Upgrades extends Component {
                     </div>
                     {upgrades.map((num, index) => {
 
-                        if (num.name[2] !== "") {
-                            dpsText = num.name[2] + " DPS";
-                        } else {
-                            dpsText = "";
-                        } // Вывод DPS
-
-
+                        num.name[2] !== "" ? dpsText = num.name[2] + " DPS" : dpsText = ""; 
+                     
                         if (this.state.upgrades[index] === 0) {
                             this.state.upgrades[index] = num.name[1];
                         } // Проверк, что первоначальные данные взяты всего один раз
 
-                        if ((this.state.clicked / this.state.upgrades[index]) >= 1) {
-                            this.state.availableUpgrade = true;
-                        } else {
-                            this.state.availableUpgrade = false;
-                        } // Проверка на цвет 
+                        (this.state.clicked / this.state.upgrades[index]) >= 1 ? this.state.availableUpgrade = true : this.state.availableUpgrade = false; // Проверка на цвет 
+                         
 
                         return (
                             <div className={this.state.availableUpgrade ? "upgradeLight" : "upgradeDark"} key={index + 1} id={index + 1}>
@@ -105,15 +109,14 @@ export default class Upgrades extends Component {
                                     {num.name[0]}<br />+{index + 1} per click<br />{dpsText}
                                 </div>
                                 <div className="button-upgrade">
-                                
                                     <button className="megaUpgrade1" onClick={this.upgradeClickHandler.bind(this, index, num.name[2], this.state.upgrades[index], 1)}>
-                                        x1({this.state.upgrades[index]})
+                                        x1({this.returnMoose(this.state.upgrades[index])})
                                     </button>
                                     <button className="megaUpgrade10" onClick={this.upgradeClickHandler.bind(this, index, +num.name[2], +this.state.upgrades[index] * 10, 10)}>
-                                        x10({this.state.upgrades[index] * 10 / 1000}K)
+                                        x10({this.returnMoose(this.state.upgrades[index] * 10)})
                                     </button>
                                     <button className="megaUpgrade100" onClick={this.upgradeClickHandler.bind(this, index, +num.name[2], +this.state.upgrades[index] * 100, 100)}>
-                                        x100({this.state.upgrades[index] * 100 / 1000}K)
+                                        x100({this.returnMoose(this.state.upgrades[index] * 100)})
                                     </button>
                                 </div>
                                 <progress value={(this.state.clicked / this.state.upgrades[index]) * 100} max="100" />
@@ -121,8 +124,10 @@ export default class Upgrades extends Component {
                         )
                     })
                     }
+
+                    
                     <div className="scoreboard">
-                        Лосиков: {this.state.clicked}<br />PC: {this.state.clickCounter}<br />DPS: {this.state.dps}
+                        Лосиков: {this.returnMoose(this.state.clicked)}<br />PC: {this.returnMoose(this.state.clickCounter)}<br />DPS: {this.returnMoose(this.state.dps)}
                     </div>
                 </div>
 
