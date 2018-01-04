@@ -10,15 +10,12 @@ export default class Upgrades extends Component {
         super(props);
 
         this.state = {
-            clicked: config.clicked,
-            clickCounter: config.clickCounter,
-            totalUpgrades: config.totalUpgrades,
-            hornsMin: config.hornsMin,
-            bloomMin: config.bloomMin,
-            sleighMin: config.sleighMin,
-            scooterMin: config.scooterMin,
+            upgrades: [0, 0, 0, 0, 0],
             availableUpgrade: true,
-            dps: config.dps
+            dps: config.dps,
+            clicked: 0,
+            clickCounter: 0,
+            totalUpgrades: 0
         }
         this.mooseClickHandler = this.mooseClickHandler.bind(this);
         this.upgradeClickHandler = this.upgradeClickHandler.bind(this);
@@ -34,25 +31,32 @@ export default class Upgrades extends Component {
         }
 
         setInterval(() => {
-            console.log(this.state.dps, this.state.clicked);
             this.setState({ clicked: this.state.clicked + this.state.dps });
         }, 1000);
 
         window.addEventListener("beforeunload", (ev) => {
-            localStorage.setItem("clicked", this.state.clicked);
-            localStorage.setItem("clickCounter", this.state.clickCounter);
-            localStorage.setItem("dps", this.state.dps)
+            localStorage.setItem("clicked", 0);
+            localStorage.setItem("clickCounter", 1);
+            localStorage.setItem("dps", 0)
         });
     }
 
-    upgradeClickHandler(minMooseForUpgrade, incrClick, dpsUpgrade) {
-        
-        if (this.state.clicked >= minMooseForUpgrade) {
+    upgradeClickHandler(incrClick, dpsUpgrade, minUpgrade) {
+        console.log(minUpgrade);
+        if (this.state.clicked >= minUpgrade) {
+            let arrayUpgrage = this.state.upgrades;
+            // console.log(arrayUpgrage);
+            let oldClicked = arrayUpgrage[incrClick];
+            // console.log(oldClicked);
+            arrayUpgrage[incrClick] = (arrayUpgrage[incrClick] * 1.25).toFixed(0);
+            // console.log(arrayUpgrage);
             this.setState({
-                clicked: this.state.clicked - minMooseForUpgrade,
-                clickCounter: this.state.clickCounter + incrClick,
-                dps: this.state.dps + +dpsUpgrade
+                clicked: this.state.clicked - oldClicked,
+                clickCounter: this.state.clickCounter + incrClick + 1,
+                dps: this.state.dps + +dpsUpgrade,
+                upgrades: arrayUpgrage
             });
+
         }
     }
 
@@ -73,29 +77,33 @@ export default class Upgrades extends Component {
                     </div>
                     {upgrades.map((num, index) => {
 
-                        if ((this.state.clicked / num.mooseMin) >= 1) {
+                        if ((this.state.clicked / this.state.upgrades[index]) >= 1) {
                             this.state.availableUpgrade = true;
                         } else {
                             this.state.availableUpgrade = false;
                         }
 
-                        if (num.dps !== "") {
-                            dpsText = num.dps + " DPS";
+                        if (num.name[2] !== "") {
+                            dpsText = num.name[2] + " DPS";
                         } else {
                             dpsText = "";
                         }
+                        if (this.state.upgrades[index] === 0) {
+                            this.state.upgrades[index] = num.name[1];
+                        }
+
                         return (
-                            <div className={this.state.availableUpgrade ? "upgradeLight" : "upgradeDark"} key={index + 1} id={index + 1} onClick={this.upgradeClickHandler.bind(this, num.mooseMin, index + 1, num.dps)}>
-                                <progress value={(this.state.clicked / num.mooseMin) * 100} max="100" id={index + 1 + 'p'}>123</progress>
+                            <div className={this.state.availableUpgrade ? "upgradeLight" : "upgradeDark"} key={index + 1} id={index + 1} onClick={this.upgradeClickHandler.bind(this, index, num.name[2], this.state.upgrades[index])}>
                                 <div className="upgrade-text">
-                                    {num.name}({num.mooseMin})<br />+{index + 1} per click<br />{dpsText}
+                                    {num.name[0]}({this.state.upgrades[index]})<br />+{index + 1} per click<br />{dpsText}
                                 </div>
+                                <progress value={(this.state.clicked / this.state.upgrades[index]) * 100} max="100" />
                             </div>
                         )
                     })
                     }
                     <div className="scoreboard">
-                        Лосиков: {this.state.clicked}
+                        Лосиков: {this.state.clicked}<br />PC: {this.state.clickCounter}<br />DPS: {this.state.dps}
                     </div>
                 </div>
 

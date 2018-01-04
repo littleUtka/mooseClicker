@@ -1,28 +1,18 @@
 [
     {
-        "name": "Рога",
-        "mooseMin": 10,
-        "dps": ""
+        "name": ["Рога", 10, "", "hornsMin"]
     },
     {
-        "name": "Шерсть",
-        "mooseMin": 100,
-        "dps": ""
+        "name": ["Шерсть", 100, "", "bloomMin"]
+     },
+    {
+        "name": ["Санки", 500, 1, "sleighMin"]
     },
     {
-        "name": "Санки",
-        "mooseMin": 500,
-        "dps": 1
+        "name": ["Скутер", 5000, 2, "scooterMin"]
     },
     {
-        "name": "Скутер",
-        "mooseMin": 5000,
-        "dps": 2
-    },
-    {
-        "name": "Ракета",
-        "mooseMin": 50000,
-        "dps": 5
+        "name": ["Ракета", 50000, 5, "rocketMin"]
     }
 
 ]

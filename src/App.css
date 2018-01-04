@@ -20,8 +20,9 @@
   
 .App .scoreboard {
   position: absolute;
-  right: 200px;
+  right: 100px;
   top: 50px;
+  width: 350px;
   font-size: 40pt;
   font-family: Monotype Corsiva;
   
