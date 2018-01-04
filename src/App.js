@@ -8,10 +8,17 @@ class App extends Component {
   constructor(props) {
     super(props);
   }
+
+  onKeyPressed(e) {
+    // if (e.key === "Control") {
+      
+    // }
+  }
   
   render() {
+    
     return (
-      <div className="App">
+      <div className="App"onKeyDown={(e) => this.onKeyPressed(e)} tabIndex="0" >
           <Upgrades />
       </div>
     );

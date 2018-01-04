@@ -51,6 +51,52 @@
   
 }
 
+.button-upgrade {
+  display: flex;
+}
+
+.megaUpgrade1 {
+  
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2px;
+  border: 2px double #765757;
+  background-color: #A58686;
+  outline: none;
+  /* position: relative;  */
+}
+
+.megaUpgrade10 {
+  
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2px;
+  border: 2px double #765757;
+  background-color: #A58686;
+  outline: none;
+  /* position: relative;  */
+}
+
+.megaUpgrade100 {
+  
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2px;
+  border: 2px double #765757;
+  background-color: #A58686;
+  outline: none;
+  /* position: relative;  */
+}
+
 .upgradeLight {
   
   width: 350px;
@@ -70,6 +116,7 @@
   flex-grow: 1;
   justify-content: center;
   align-items: center;
+  line-height: 1.5;
 }
 
 

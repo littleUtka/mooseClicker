@@ -25,7 +25,7 @@ export default class Upgrades extends Component {
     componentWillMount() {
 
         if (localStorage.getItem("params") !== null) {
-         
+
             let storageJSON = JSON.parse(localStorage.getItem("params"));
             let newUpgrades = [storageJSON["hornsMin"], storageJSON["bloomMin"], storageJSON["sleighMin"], storageJSON["scooterMin"], storageJSON["rocketMin"]];
             this.setState({ clicked: +storageJSON["clicked"], clickCounter: +storageJSON["clickCounter"], dps: +storageJSON["dps"], upgrades: newUpgrades });
@@ -38,29 +38,27 @@ export default class Upgrades extends Component {
         }, 1000);
 
         window.addEventListener("beforeunload", (ev) => {
-            // localStorage.setItem("clicked", 0);
-            // localStorage.setItem("clickCounter", 1);
-            // localStorage.setItem("dps", 0);
+           
             localStorage.setItem("params", '{"clicked":' + this.state.clicked + ',"clickCounter":' + this.state.clickCounter + ',"dps":' + this.state.dps +
-                                            ',"hornsMin":' + this.state.upgrades[0] + ',"bloomMin":' + this.state.upgrades[1] + ',"sleighMin":' + this.state.upgrades[2] + ',"scooterMin":' + 
-                                            this.state.upgrades[3] + ',"rocketMin":' + this.state.upgrades[4] +  '}')
+                ',"hornsMin":' + this.state.upgrades[0] + ',"bloomMin":' + this.state.upgrades[1] + ',"sleighMin":' + this.state.upgrades[2] + ',"scooterMin":' +
+                this.state.upgrades[3] + ',"rocketMin":' + this.state.upgrades[4] + '}')
 
         });
     }
 
-    upgradeClickHandler(incrClick, dpsUpgrade, minUpgrade) {
-        
+    upgradeClickHandler(incrClick, dpsUpgrade, minUpgrade, multiplier) {
+
         if (this.state.clicked >= minUpgrade) {
             let arrayUpgrage = this.state.upgrades;
             // console.log(arrayUpgrage);
-            let oldClicked = arrayUpgrage[incrClick];
+            let oldClicked = arrayUpgrage[incrClick] * multiplier;
             // console.log(oldClicked);
-            arrayUpgrage[incrClick] = (arrayUpgrage[incrClick] * 1.25).toFixed(0);
+            arrayUpgrage[incrClick] = (arrayUpgrage[incrClick] * Math.pow(1.25, multiplier)).toFixed(0);
             // console.log(arrayUpgrage);
             this.setState({
                 clicked: this.state.clicked - oldClicked,
-                clickCounter: this.state.clickCounter + incrClick + 1,
-                dps: this.state.dps + +dpsUpgrade,
+                clickCounter: this.state.clickCounter + (incrClick+1) * multiplier,
+                dps: this.state.dps + +dpsUpgrade * multiplier,
                 upgrades: arrayUpgrage
             });
 
@@ -83,26 +81,40 @@ export default class Upgrades extends Component {
                         <img src={moose} onClick={this.mooseClickHandler} alt="moose" />
                     </div>
                     {upgrades.map((num, index) => {
-                  
+
                         if (num.name[2] !== "") {
                             dpsText = num.name[2] + " DPS";
                         } else {
                             dpsText = "";
-                        }
+                        } // Вывод DPS
+
+
                         if (this.state.upgrades[index] === 0) {
                             this.state.upgrades[index] = num.name[1];
-                        }
+                        } // Проверк, что первоначальные данные взяты всего один раз
 
                         if ((this.state.clicked / this.state.upgrades[index]) >= 1) {
                             this.state.availableUpgrade = true;
                         } else {
                             this.state.availableUpgrade = false;
-                        }
+                        } // Проверка на цвет 
 
                         return (
-                            <div className={this.state.availableUpgrade ? "upgradeLight" : "upgradeDark"} key={index + 1} id={index + 1} onClick={this.upgradeClickHandler.bind(this, index, num.name[2], this.state.upgrades[index])}>
+                            <div className={this.state.availableUpgrade ? "upgradeLight" : "upgradeDark"} key={index + 1} id={index + 1}>
                                 <div className="upgrade-text">
-                                    {num.name[0]}({this.state.upgrades[index]})<br />+{index + 1} per click<br />{dpsText}
+                                    {num.name[0]}<br />+{index + 1} per click<br />{dpsText}
+                                </div>
+                                <div className="button-upgrade">
+                                
+                                    <button className="megaUpgrade1" onClick={this.upgradeClickHandler.bind(this, index, num.name[2], this.state.upgrades[index], 1)}>
+                                        x1({this.state.upgrades[index]})
+                                    </button>
+                                    <button className="megaUpgrade10" onClick={this.upgradeClickHandler.bind(this, index, +num.name[2], +this.state.upgrades[index] * 10, 10)}>
+                                        x10({this.state.upgrades[index] * 10 / 1000}K)
+                                    </button>
+                                    <button className="megaUpgrade100" onClick={this.upgradeClickHandler.bind(this, index, +num.name[2], +this.state.upgrades[index] * 100, 100)}>
+                                        x100({this.state.upgrades[index] * 100 / 1000}K)
+                                    </button>
                                 </div>
                                 <progress value={(this.state.clicked / this.state.upgrades[index]) * 100} max="100" />
                             </div>
