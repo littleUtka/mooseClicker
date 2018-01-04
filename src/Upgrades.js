@@ -11,10 +11,10 @@ export default class Upgrades extends Component {
 
         this.state = {
             upgrades: [0, 0, 0, 0, 0],
-            availableUpgrade: true,
+            availableUpgrade: false,
             dps: config.dps,
             clicked: 0,
-            clickCounter: 0,
+            clickCounter: 1,
             totalUpgrades: 0
         }
         this.mooseClickHandler = this.mooseClickHandler.bind(this);
@@ -24,8 +24,11 @@ export default class Upgrades extends Component {
 
     componentWillMount() {
 
-        if (localStorage.getItem("clicked") !== null) {
-            this.setState({ clicked: +localStorage.getItem("clicked"), clickCounter: +localStorage.getItem("clickCounter"), dps: +localStorage.getItem("dps") });
+        if (localStorage.getItem("params") !== null) {
+         
+            let storageJSON = JSON.parse(localStorage.getItem("params"));
+            let newUpgrades = [storageJSON["hornsMin"], storageJSON["bloomMin"], storageJSON["sleighMin"], storageJSON["scooterMin"], storageJSON["rocketMin"]];
+            this.setState({ clicked: +storageJSON["clicked"], clickCounter: +storageJSON["clickCounter"], dps: +storageJSON["dps"], upgrades: newUpgrades });
         } else {
             this.setState({ clicked: +0, clickCounter: +1, dps: +0 });
         }
@@ -35,14 +38,18 @@ export default class Upgrades extends Component {
         }, 1000);
 
         window.addEventListener("beforeunload", (ev) => {
-            localStorage.setItem("clicked", 0);
-            localStorage.setItem("clickCounter", 1);
-            localStorage.setItem("dps", 0)
+            // localStorage.setItem("clicked", 0);
+            // localStorage.setItem("clickCounter", 1);
+            // localStorage.setItem("dps", 0);
+            localStorage.setItem("params", '{"clicked":' + this.state.clicked + ',"clickCounter":' + this.state.clickCounter + ',"dps":' + this.state.dps +
+                                            ',"hornsMin":' + this.state.upgrades[0] + ',"bloomMin":' + this.state.upgrades[1] + ',"sleighMin":' + this.state.upgrades[2] + ',"scooterMin":' + 
+                                            this.state.upgrades[3] + ',"rocketMin":' + this.state.upgrades[4] +  '}')
+
         });
     }
 
     upgradeClickHandler(incrClick, dpsUpgrade, minUpgrade) {
-        console.log(minUpgrade);
+        
         if (this.state.clicked >= minUpgrade) {
             let arrayUpgrage = this.state.upgrades;
             // console.log(arrayUpgrage);
@@ -76,13 +83,7 @@ export default class Upgrades extends Component {
                         <img src={moose} onClick={this.mooseClickHandler} alt="moose" />
                     </div>
                     {upgrades.map((num, index) => {
-
-                        if ((this.state.clicked / this.state.upgrades[index]) >= 1) {
-                            this.state.availableUpgrade = true;
-                        } else {
-                            this.state.availableUpgrade = false;
-                        }
-
+                  
                         if (num.name[2] !== "") {
                             dpsText = num.name[2] + " DPS";
                         } else {
@@ -90,6 +91,12 @@ export default class Upgrades extends Component {
                         }
                         if (this.state.upgrades[index] === 0) {
                             this.state.upgrades[index] = num.name[1];
+                        }
+
+                        if ((this.state.clicked / this.state.upgrades[index]) >= 1) {
+                            this.state.availableUpgrade = true;
+                        } else {
+                            this.state.availableUpgrade = false;
                         }
 
                         return (
