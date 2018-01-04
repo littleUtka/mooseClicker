@@ -1,23 +1,28 @@
 [
     {
         "name": "Рога",
-        "mooseMin": 10
+        "mooseMin": 10,
+        "dps": ""
     },
     {
         "name": "Шерсть",
-        "mooseMin": 100
+        "mooseMin": 100,
+        "dps": ""
     },
     {
         "name": "Санки",
-        "mooseMin": 500
+        "mooseMin": 500,
+        "dps": 1
     },
     {
         "name": "Скутер",
-        "mooseMin": 5000
+        "mooseMin": 5000,
+        "dps": 2
     },
     {
         "name": "Ракета",
-        "mooseMin": 50000
+        "mooseMin": 50000,
+        "dps": 5
     }
 
 ]
