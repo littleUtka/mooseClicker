@@ -94,7 +94,9 @@ export default class Upgrades extends Component {
         {
             var dpsText = '';
             return (
+                
                 <div className="menu">
+                    
                     <div className="Moose">
                         <img src={moose} onClick={this.mooseClickHandler} alt="moose" />
                     </div>
@@ -125,7 +127,7 @@ export default class Upgrades extends Component {
                                         )
                                     }
                                     )}
-
+                                    
                                 </div>
                                 <progress value={(this.state.clicked / this.state.upgrades[index]) * 100} max="100" />
                             </div>
@@ -137,6 +139,7 @@ export default class Upgrades extends Component {
                     <div className="scoreboard">
                         Лосиков: {this.returnMoose(this.state.clicked)}<br />PC: {this.returnMoose(this.state.clickCounter)}<br />DPS: {this.returnMoose(this.state.dps)}
                     </div>
+                    
                 </div>
 
 
