@@ -58,8 +58,8 @@ export default class Upgrades extends Component {
                                     {this.props.appState.buttonUpgrade.map((buttonUpg, buttonIndex) => {
                                         return (
                                             
-                                            <button className={buttonUpg.name} style={{"backgroundColor": this.returnButtonColor(this.props.appState.clicked, this.props.appState.upgrades[index] * buttonUpg.multiplier)}} onClick={(e) => this.props.handleUpgradeClick(index, num.name[2], this.props.appState.upgrades[index], buttonUpg.multiplier)} key={buttonIndex}>
-                                                {buttonUpg.name}({this.returnMoose(this.props.appState.upgrades[index] * buttonUpg.multiplier)})
+                                            <button className={"x" + buttonUpg} style={{"backgroundColor": this.returnButtonColor(this.props.appState.clicked, this.props.appState.upgrades[index] * buttonUpg)}} onClick={(e) => this.props.handleUpgradeClick(index, num.name[2], this.props.appState.upgrades[index], buttonUpg)} key={buttonIndex}>
+                                                {"x" + buttonUpg}({this.returnMoose(this.props.appState.upgrades[index] * buttonUpg)})
                                             </button>
                                         )
                                     }

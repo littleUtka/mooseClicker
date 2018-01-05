@@ -13,7 +13,7 @@ class App extends Component {
       clickCounter: 1,
       dps: 0,
       upgrades: [0, 0, 0, 0, 0],
-      buttonUpgrade: [{ "name": "x1", "multiplier": 1 }, { "name": "x10", "multiplier": 10 }, { "name": "x100", "multiplier": 100 }]
+      buttonUpgrade: [1, 10, 100]
     }
 
     this.mooseClickHandler = this.mooseClickHandler.bind(this);
