@@ -80,7 +80,7 @@ export default class Upgrades extends Component {
          } else {
             return((mooseConv / Math.pow(10, 6)).toFixed(2) + 'М'); 
          }
-        
+       
     }
 
 
@@ -89,46 +89,7 @@ export default class Upgrades extends Component {
             var dpsText = '';
             return (
                 <div className="menu">
-                    <div className="Moose">
-                        <img src={moose} onClick={this.mooseClickHandler} alt="moose" />
-                    </div>
-                    {upgrades.map((num, index) => {
-
-                        num.name[2] !== "" ? dpsText = num.name[2] + " DPS" : dpsText = ""; 
-                     
-                        if (this.state.upgrades[index] === 0) {
-                            this.state.upgrades[index] = num.name[1];
-                        } // Проверк, что первоначальные данные взяты всего один раз
-
-                        (this.state.clicked / this.state.upgrades[index]) >= 1 ? this.state.availableUpgrade = true : this.state.availableUpgrade = false; // Проверка на цвет 
-                         
-
-                        return (
-                            <div className={this.state.availableUpgrade ? "upgradeLight" : "upgradeDark"} key={index + 1} id={index + 1}>
-                                <div className="upgrade-text">
-                                    {num.name[0]}<br />+{index + 1} per click<br />{dpsText}
-                                </div>
-                                <div className="button-upgrade">
-                                    <button className="megaUpgrade1" onClick={this.upgradeClickHandler.bind(this, index, num.name[2], this.state.upgrades[index], 1)}>
-                                        x1({this.returnMoose(this.state.upgrades[index])})
-                                    </button>
-                                    <button className="megaUpgrade10" onClick={this.upgradeClickHandler.bind(this, index, +num.name[2], +this.state.upgrades[index] * 10, 10)}>
-                                        x10({this.returnMoose(this.state.upgrades[index] * 10)})
-                                    </button>
-                                    <button className="megaUpgrade100" onClick={this.upgradeClickHandler.bind(this, index, +num.name[2], +this.state.upgrades[index] * 100, 100)}>
-                                        x100({this.returnMoose(this.state.upgrades[index] * 100)})
-                                    </button>
-                                </div>
-                                <progress value={(this.state.clicked / this.state.upgrades[index]) * 100} max="100" />
-                            </div>
-                        )
-                    })
-                    }
-
-                    
-                    <div className="scoreboard">
-                        Лосиков: {this.returnMoose(this.state.clicked)}<br />PC: {this.returnMoose(this.state.clickCounter)}<br />DPS: {this.returnMoose(this.state.dps)}
-                    </div>
+                    Zaebalo
                 </div>
 
 
