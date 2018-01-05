@@ -83,6 +83,11 @@ export default class Upgrades extends Component {
         }
 
     }
+    returnButtonColor(totalClicked, minMoose) {
+
+        let butonColor = totalClicked >= minMoose ? "#86C9CB" : "#A58686"; 
+        return(butonColor);
+    }
 
 
     render() {
@@ -113,7 +118,8 @@ export default class Upgrades extends Component {
 
                                     {this.state.buttonUpgrade.map((buttonUpg, buttonIndex) => {
                                         return (
-                                            <button className={buttonUpg.name} onClick={this.upgradeClickHandler.bind(this, index, num.name[2], this.state.upgrades[index], buttonUpg.multiplier)} key={buttonIndex}>
+                                            
+                                            <button className={buttonUpg.name} style={{"background-color": this.returnButtonColor(this.state.clicked, this.state.upgrades[index] * buttonUpg.multiplier)}} onClick={this.upgradeClickHandler.bind(this, index, num.name[2], this.state.upgrades[index], buttonUpg.multiplier)} key={buttonIndex}>
                                                 {buttonUpg.name}({this.returnMoose(this.state.upgrades[index] * buttonUpg.multiplier)})
                                             </button>
                                         )
