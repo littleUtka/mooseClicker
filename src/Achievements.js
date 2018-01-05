@@ -8,15 +8,20 @@ var upgrades = require('./achievementsConfig.json');
 class PopUp extends Component {
 
     onMouseHandler(description) {
+
         alert(description);
+
     }
 
     returnAchColor(totalClicked, minMoose) {
+
         let buttonColor = totalClicked >= minMoose ? "#ECDFDF" : "#C1C1C1";
-        return(buttonColor);    
+        return(buttonColor);   
+
     }
     
     render() {
+
         return (
             <div className="popup">
                 <div className="popup_inner">
@@ -35,25 +40,32 @@ class PopUp extends Component {
                     </div>
             </div>
         );
+
     }
 }
 
 
 export default class Achievements extends Component {
+
     constructor() {
+
         super();
         this.state = {
             showPopUp: false
         };
+
     }
 
     achClickHandler() {
+
         this.setState({
             showPopUp: !this.state.showPopUp
         });
+
     }
 
     render() {
+
         return (
             <div className="achievement">
                 <img src={AchLogo} alt="Achievement" onClick={this.achClickHandler.bind(this)} />
@@ -62,6 +74,6 @@ export default class Achievements extends Component {
                 }
             </div>
         );
+        
     }
-
 }

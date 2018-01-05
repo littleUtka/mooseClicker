@@ -13,9 +13,7 @@
 }
 
 .Moose img {
-  
-    width: 200px;
-
+  width: 200px;
 }
 
 .popup {
@@ -38,9 +36,7 @@
   margin-left: 50px;
   margin-top: 50px;
   height: 100px;
-  
-  
-}
+ }
 
 .upgrade {
   display: flex;
@@ -48,10 +44,7 @@
   justify-content: center;
   align-items: center;
   border: 2px double #E2E5E5;
-  /* background-color: #ECDFDF; */
   width: 100px;
-
-  
 }
 
 .closeButtonPopUp {
@@ -99,31 +92,23 @@
 .menu {
   display: flex;
   flex-direction: column;
-  
-  
-  
 }
 
 .upgradeDark {
-  
   width: 350px;
   height: 100vh;
   text-align: center;
   border: 2px double #E2E5E5;  
-  /* font-family: Impact; */
-  /* font-size: 20pt; */
   background-color: #959090;
   display: flex;
   flex-direction: column;
-  
-}
+ }
 
 .button-upgrade {
   display: flex;
 }
 
 .x1 {
-  
   display: flex;
   flex-grow: 1;
   flex-direction: row;
@@ -131,13 +116,10 @@
   align-items: center;
   margin-bottom: 2px;
   border: 2px double #765757;
-  
   outline: none;
-  /* position: relative;  */
-}
+ }
 
 .x10 {
-  
   display: flex;
   flex-grow: 1;
   flex-direction: row;
@@ -145,13 +127,10 @@
   align-items: center;
   margin-bottom: 2px;
   border: 2px double #765757;
- 
   outline: none;
-  /* position: relative;  */
-}
+ }
 
 .x100 {
-  
   display: flex;
   flex-grow: 1;
   flex-direction: row;
@@ -159,23 +138,17 @@
   align-items: center;
   margin-bottom: 2px;
   border: 2px double #765757;
-  
   outline: none;
-  /* position: relative;  */
-}
+ }
 
 .upgradeLight {
-  
   width: 350px;
   height: 100vh;
   text-align: center;
   border: 2px double #E2E5E5;  
-  /* font-family: Impact; */
-  /* font-size: 20pt; */
   background-color: #E3ECEC;
   display: flex;
   flex-direction: column;
-  
 }
 
 .upgrade-text {
