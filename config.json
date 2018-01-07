@@ -1,0 +1,10 @@
+{
+    "clicked": 0,
+    "clickCounter": 1,
+    "totalUpgrades": 4,
+    "hornsMin": 10,
+    "bloomMin": 300,
+    "sleighMin": 2000,
+    "scooterMin": 10000,
+    "dps": 0
+}
