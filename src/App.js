@@ -13,6 +13,7 @@ class App extends Component {
       clickCounter: 1,
       dps: 0,
       upgrades: [0, 0, 0, 0, 0],
+      business: [0, 0, 0, 0],
       buttonUpgrade: [1, 10, 100]
     }
 
@@ -53,11 +54,12 @@ class App extends Component {
 
   }
 
-  upgradeClickHandler(incrClick, dpsUpgrade, minUpgrade, multiplier) {
+  upgradeClickHandler(incrClick, dpsUpgrade, minUpgrade, multiplier, flag) {
+   
 
     if (this.state.clicked >= minUpgrade) {
-
-      let arrayUpgrage = this.state.upgrades;
+      let arrayUpgrage = [];
+      flag ? arrayUpgrage = this.state.upgrades : arrayUpgrage = this.state.business;
       let oldClicked = arrayUpgrage[incrClick] * multiplier;
       arrayUpgrage[incrClick] = (arrayUpgrage[incrClick] * Math.pow(1.25, multiplier)).toFixed(0);
       
@@ -65,15 +67,20 @@ class App extends Component {
         clicked: this.state.clicked - oldClicked,
         clickCounter: this.state.clickCounter + (incrClick + 1) * multiplier,
         dps: this.state.dps + +dpsUpgrade * multiplier,
-        upgrades: arrayUpgrage
       });
+
+      flag ? this.setState({
+        upgrades: arrayUpgrage
+      }) : this.setState({
+        business: arrayUpgrage
+      }) 
     }
   }
 
   render() {
 
     return (
-      <div className="App" onKeyDown={(e) => this.onKeyPressed(e)} tabIndex="0" >
+      <div className="App">
         <Upgrades handleMooseClick={this.mooseClickHandler} appState={this.state} handleUpgradeClick={this.upgradeClickHandler} />
         <Achievements mooseClicked={this.state.clicked} />
       </div>

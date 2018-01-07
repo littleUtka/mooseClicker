@@ -77,6 +77,11 @@
   width: 80%;
   margin-top: 50px;
 }
+
+.button-upgrades {
+   width: 50%;
+   height: 40px;
+}
   
 .App .scoreboard {
   position: absolute;
