@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Upgrades from './Upgrades.js';
 import Achievements from './Achievements.js';
+import moose from './moose.png';
+import mooseGold from './mooseGold.png';
 
 
 class App extends Component {
@@ -14,7 +16,9 @@ class App extends Component {
       dps: 0,
       upgrades: [0, 0, 0, 0, 0],
       business: [0, 0, 0, 0],
-      buttonUpgrade: [1, 10, 100]
+      buttonUpgrade: [1, 10, 100],
+      mooseSrc: '',
+      clickMultiplier: 1
     }
 
     this.mooseClickHandler = this.mooseClickHandler.bind(this);
@@ -46,11 +50,36 @@ class App extends Component {
       this.state.upgrades[3] + ',"rocketMin":' + this.state.upgrades[4] + '}')
 
     });
+
+    
+    this.setState({mooseSrc: moose});
+    let goldenMooseTimeOut = (Math.floor(Math.random() * 67) + 1) * 1000;
+    console.log(goldenMooseTimeOut);
+    setTimeout(() => {
+      this.handlerGoldenMoose();
+    }, goldenMooseTimeOut);
+
   }
+
+  handlerGoldenMoose() {
+      this.setState({
+      mooseSrc: mooseGold,
+      clickMultiplier: 10
+    });
+
+      setTimeout(() => {
+        this.setState({
+          mooseSrc: moose,
+          clickMultiplier: 1 
+        })
+      }, 10000);
+  }
+
+  
 
   mooseClickHandler() {
 
-    this.setState({ clicked: this.state.clicked + this.state.clickCounter });
+    this.setState({ clicked: this.state.clicked + this.state.clickCounter * this.state.clickMultiplier });
 
   }
 

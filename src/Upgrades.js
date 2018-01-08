@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import moose from './moose.png';
 var upgrades = require('./upgradesConfig.json');
 var business = require('./businessConfig.json');
 
@@ -86,7 +85,7 @@ export default class Upgrades extends Component {
                     <button className="button-upgrades" onClick={this.handlerUpgradeStatus.bind(this, true)}>Бизнес</button>
                 </div>
                 <div className="Moose">
-                    <img src={moose} onClick={(e) => {
+                    <img src={this.props.appState.mooseSrc} onClick={(e) => {
 
                         this.props.handleMooseClick();
 
@@ -96,7 +95,7 @@ export default class Upgrades extends Component {
                     this.state.upgradeFlag ? this.returnUpgradesMoose(upgrades, this.props.appState.upgrades, 1) : this.returnUpgradesMoose(business, this.props.appState.business, 2)
                 }
                 <div className="scoreboard">
-                    Лосиков: {this.returnMoose(this.props.appState.clicked)}<br />PC: {this.returnMoose(this.props.appState.clickCounter)}<br />DPS: {this.returnMoose(this.props.appState.dps)}
+                    Лосиков: {this.returnMoose(this.props.appState.clicked)}<br />PC: {this.returnMoose(this.props.appState.clickCounter * this.props.appState.clickMultiplier)}<br />DPS: {this.returnMoose(this.props.appState.dps * this.props.appState.clickMultiplier)}
                 </div>
             </div>
         );
