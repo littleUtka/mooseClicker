@@ -95,7 +95,7 @@ export default class Upgrades extends Component {
                     this.state.upgradeFlag ? this.returnUpgradesMoose(upgrades, this.props.appState.upgrades, 1) : this.returnUpgradesMoose(business, this.props.appState.business, 2)
                 }
                 <div className="scoreboard">
-                    Лосиков: {this.returnMoose(this.props.appState.clicked)}<br />PC: {this.returnMoose(this.props.appState.clickCounter * this.props.appState.clickMultiplier)}<br />DPS: {this.returnMoose(this.props.appState.dps * this.props.appState.clickMultiplier)}
+                    Лосиков: {this.returnMoose(this.props.appState.clicked)}<br />PC: {this.returnMoose(this.props.appState.clickCounter * this.props.appState.clickMultiplier)}<br />DPS: {this.returnMoose(this.props.appState.dps)}
                 </div>
             </div>
         );
