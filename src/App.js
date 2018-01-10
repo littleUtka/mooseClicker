@@ -44,14 +44,18 @@ class App extends Component {
 
     // }
 
-    // setInterval(() => {
-    //   this.state.fishClicked - this.state.moneyCounter >= 0 ?
-    //   this.setState({ 
-    //     fishClicked: this.state.fishClicked + this.state.fishDPS - this.state.moneyDPS, 
-    //     moneyWallet: this.state.moneyWallet + this.state.moneyDPS,
-
-    //   });
-    // }, 1000);
+    setInterval(() => {
+      this.state.fishClicked + this.state.fishDPS - this.state.moneyDPS >= 0 ?
+      this.setState({ 
+        fishClicked: this.state.fishClicked + this.state.fishDPS - this.state.moneyDPS, 
+        moneyWallet: this.state.moneyWallet + this.state.moneyDPS
+      }) 
+      :
+      this.setState({
+        fishClicked: 0,
+        moneyWallet: this.state.moneyWallet + this.state.fishClicked
+      }) 
+    }, 1000);
 
     // window.addEventListener("beforeunload", (ev) => {
 
