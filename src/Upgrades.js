@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-var upgrades = require('./upgradesConfig.json');
-var business = require('./businessConfig.json');
+var upgrades = require('./businessConfig.json');
+var business = require('./productionConfig.json');
 
 
 export default class Upgrades extends Component {
@@ -31,42 +31,46 @@ export default class Upgrades extends Component {
 
     }
 
+    // geomTotalCost(totalItems, oneItemCost) {
+    // return(
+    //     (oneItemCost * (1 - Math.pow(1.25, totalItems))) /
+    // );    
+    // }
+
     returnUpgradesMoose(upgradeKind, upgradeInfo, upgradeCount) {
         
         var dpsText = '';
+        var clickText = '';
         return (upgradeKind.map((num, index) => {
 
             num.name[2] !== "" ? dpsText = num.name[2] + " DPS" : dpsText = "";
+            num.name[3] !== "" ? clickText = "+ " + num.name[3] + " per click" : clickText = "";
 
-            if (upgradeCount === 1) {
-                if (this.props.appState.upgrades[index] === 0) {
-                    this.props.appState.upgrades[index] = num.name[1];
-                } // Проверка, что первоначальные данные взяты всего один раз
-            } else {
-                if (this.props.appState.business[index] === 0) {
-                    this.props.appState.business[index] = num.name[1];
-                } // Проверка, что первоначальные данные взяты всего один раз    
-            }
-            
-            let availableUpgrade = this.props.appState.clicked >= upgradeInfo[index];
+            this.props.appState.fishFlag ? (
+                 this.props.appState.upgrades[index] === 0 ? this.props.appState.upgrades[index] = num.name[1] : null
+                 // Проверка, что первоначальные данные взяты всего один раз
+             ) : this.props.appState.business[index] === 0 ? this.props.appState.business[index] = num.name[1]: null
+                 // Проверка, что первоначальные данные взяты всего один раз    
+                        
+            let availableUpgrade = this.props.appState.moneyWallet >= upgradeInfo[index];
             // console.log(upgradeInfo[index]);
             return (
                 <div className={availableUpgrade ? "upgradeLight" : "upgradeDark"} key={index + 1}>
                     <div className="upgrade-text">
-                        {num.name[0]}<br />+{index + 1} per click<br />{dpsText}
+                        {num.name[0]}<br />{clickText}{dpsText}
                     </div>
                     <div className="button-upgrade">
                         {this.props.appState.buttonUpgrade.map((buttonUpg, buttonIndex) => {
                             return (
 
-                                <button className={"x" + buttonUpg} style={{ "backgroundColor": this.returnButtonColor(this.props.appState.clicked, upgradeInfo[index] * buttonUpg) }} onClick={(e) => this.props.handleUpgradeClick(index, num.name[2], upgradeInfo[index], buttonUpg, this.state.upgradeFlag)} key={buttonIndex}>
+                                <button className={"x" + buttonUpg} style={{ "backgroundColor": this.returnButtonColor(this.props.appState.moneyWallet, upgradeInfo[index] * buttonUpg) }} onClick={(e) => this.props.handleUpgradeClick(index, num.name[2], upgradeInfo[index], buttonUpg, num.name[3])} key={buttonIndex}>
                                     {"x" + buttonUpg}({this.returnMoose(upgradeInfo[index] * buttonUpg)})
                                                         </button>
                             )
                         }
                         )}
                     </div>
-                    <progress value={(this.props.appState.clicked / upgradeInfo[index]) * 100} max="100" />
+                    <progress value={(this.props.appState.moneyWallet / upgradeInfo[index]) * 100} max="100" />
                 </div>
             )
         }))
@@ -81,8 +85,8 @@ export default class Upgrades extends Component {
         return (
             <div className="menu">
                 <div>
-                    <button className="button-upgrades" onClick={this.handlerUpgradeStatus.bind(this, false)}>Добыча</button>
-                    <button className="button-upgrades" onClick={this.handlerUpgradeStatus.bind(this, true)}>Бизнес</button>
+                    <button className="button-upgrades" onClick={this.props.handleFishFlagChanger.bind(this, false)}>Добыча</button>
+                    <button className="button-upgrades" onClick={this.props.handleFishFlagChanger.bind(this, true)}>Бизнес</button>
                 </div>
                 <div className="Moose">
                     <img src={this.props.appState.mooseSrc} onClick={(e) => {
@@ -92,10 +96,15 @@ export default class Upgrades extends Component {
                     }} alt="moose" />
                 </div>
                 {
-                    this.state.upgradeFlag ? this.returnUpgradesMoose(upgrades, this.props.appState.upgrades, 1) : this.returnUpgradesMoose(business, this.props.appState.business, 2)
+                    this.props.appState.fishFlag ? this.returnUpgradesMoose(upgrades, this.props.appState.upgrades) : this.returnUpgradesMoose(business, this.props.appState.business)
                 }
                 <div className="scoreboard">
-                    Лосиков: {this.returnMoose(this.props.appState.clicked)}<br />PC: {this.returnMoose(this.props.appState.clickCounter * this.props.appState.clickMultiplier)}<br />DPS: {this.returnMoose(this.props.appState.dps)}
+                    Рыбок: {this.returnMoose(this.props.appState.fishClicked)}<br />
+                    Денег: {this.props.appState.moneyWallet}<br />
+                    PC(FISH): {this.returnMoose(this.props.appState.clickCounter * this.props.appState.clickMultiplier)}<br />
+                    PC($): {this.returnMoose(this.props.appState.moneyCounter * this.props.appState.clickMultiplier)}<br />
+                    DPS(FISH): {this.returnMoose(this.props.appState.fishDPS)}<br />
+                    DPS($): {this.returnMoose(this.props.appState.moneyDPS)}<br />
                 </div>
             </div>
         );
